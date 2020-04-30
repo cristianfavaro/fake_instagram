@@ -3,6 +3,6 @@ module.exports = {
   dialect: "mysql",
   username: "root",
   port: 3306,
-  password: "CanYou1Celebrate?",
+  password: "",
   database: "fake-instagram",
 };
