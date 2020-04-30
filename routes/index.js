@@ -6,6 +6,9 @@ const multer = require("multer");
 const userController = require("../controllers/userController");
 const authController = require("../controllers/authController");
 const postController = require("../controllers/postController");
+
+const isAuth = require('../middleware/isAuth')
+
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, path.join("public", "posts"));
@@ -18,7 +21,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 /* GET home page. */
 
-router.get("/", authController.create);
+router.get("/", isAuth ,postController.index);
 
 router.get("/login", authController.create);
 router.post("/login", authController.store);
@@ -29,8 +32,6 @@ router.post("/registro", userController.store);
 router.get("/publicar", postController.create);
 router.post("/publicar", upload.any(), postController.store);
 
-router.get("/home", function (req, res, next) {
-  res.render("index", { title: "Express" });
-});
+router.get("/home", isAuth ,postController.index);
 
 module.exports = router;
